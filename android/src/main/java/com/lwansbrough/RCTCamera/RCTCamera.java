@@ -344,6 +344,17 @@ public class RCTCamera {
             camera.setParameters(parameters);
         }
     }
+    
+    public int getRotation(int type, int deviceOrientation) {
+        CameraInfoWrapper cameraInfo = _cameraInfos.get(type);
+        int rotation;
+        if (cameraInfo.info.facing == Camera.CameraInfo.CAMERA_FACING_FRONT) {
+            rotation = (90 + deviceOrientation * 90) % 360;
+        } else {
+            rotation = (450 - deviceOrientation * 90) % 360;
+        }
+        return rotation;
+    }
 
     public void adjustCameraRotationToDeviceOrientation(int type, int deviceOrientation) {
         Camera camera = _cameras.get(type);
